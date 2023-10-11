@@ -16,6 +16,7 @@
 
 package org.springframework.security.oauth.consumer.token;
 
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth.consumer.OAuthConsumerToken;
 import org.springframework.security.oauth.consumer.OAuthSecurityContext;
@@ -53,13 +54,13 @@ public class HttpSessionBasedTokenServices implements OAuthConsumerTokenServices
     return consumerToken;
   }
 
-  public void storeToken(String resourceId, OAuthConsumerToken token) {
+  public void storeToken(@RUntainted String resourceId, OAuthConsumerToken token) {
     HttpSession session = getSession();
     session.setAttribute(KEY_PREFIX + "#" + resourceId, token);
 
     //adding support for oauth session extension (https://oauth.googlecode.com/svn/spec/ext/session/1.0/drafts/1/spec.html)
     Long expiration = null;
-    String expiresInValue = token.getAdditionalParameters() != null ? token.getAdditionalParameters().get("oauth_expires_in") : null;
+    @RUntainted String expiresInValue = token.getAdditionalParameters() != null ? token.getAdditionalParameters().get("oauth_expires_in") : null;
     if (expiresInValue != null) {
       try {
         expiration = System.currentTimeMillis() + (Integer.parseInt(expiresInValue) * 1000);

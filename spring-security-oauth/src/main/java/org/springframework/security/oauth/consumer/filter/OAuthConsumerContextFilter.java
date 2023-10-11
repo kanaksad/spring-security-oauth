@@ -33,6 +33,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -220,7 +221,7 @@ public class OAuthConsumerContextFilter implements Filter, InitializingBean, Mes
 				}
 				catch (Exception ex) {
 					Throwable[] causeChain = getThrowableAnalyzer().determineCauseChain(ex);
-					OAuthRequestFailedException rfe = (OAuthRequestFailedException) getThrowableAnalyzer().getFirstThrowableOfType(OAuthRequestFailedException.class, causeChain);
+					@RUntainted OAuthRequestFailedException rfe = (OAuthRequestFailedException) getThrowableAnalyzer().getFirstThrowableOfType(OAuthRequestFailedException.class, causeChain);
 					if (rfe != null) {
 						fail(request, response, rfe);
 					}
