@@ -100,9 +100,7 @@
                           </annotationProcessors>
                           <compilerArgs>
                               <arg>-AannotatedPackages=org.springframework</arg>
-                              <arg>-AenableLibraryCheck=false</arg>
-                              <arg>-AenableSanitizationCheck=false</arg>
-                              <arg>-AenableValidationCheck=true</arg>
+                              <arg>-AenableLibraryCheck</arg>
                               <!-- <arg>-Awarns</arg> --> <!-- -Awarns turns type-checking errors into warnings. -->
                           </compilerArgs>
                       </configuration>
